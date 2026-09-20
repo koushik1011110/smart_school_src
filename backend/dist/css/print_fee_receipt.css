@@ -1,0 +1,109 @@
+/**
+ * Fee receipt print: A4 portrait.
+ * Supports dual side-by-side copies (Office Copy & Student Copy) or single full-width copy.
+ */
+@page {
+    size: A4 portrait;
+    margin: 5mm 5mm;
+}
+
+@media print {
+    html,
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .container {
+        width: 100% !important;
+        max-width: none !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .table-responsive {
+        overflow: visible !important;
+    }
+
+    .fee-receipt-dual-row {
+        display: block !important;
+        page-break-inside: avoid;
+    }
+
+    .fee-receipt-pane {
+        width: 50% !important;
+        float: left !important;
+        box-sizing: border-box !important;
+    }
+
+    .fee-receipt-pane--office {
+        border-right: 1px dashed #bbb !important;
+        padding-right: 8px !important;
+    }
+
+    .fee-receipt-pane--student {
+        padding-left: 8px !important;
+    }
+}
+
+.fee-receipt-dual-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.fee-receipt-pane {
+    box-sizing: border-box;
+    width: 50%;
+    float: left;
+}
+
+.fee-receipt-pane--office {
+    border-right: 1px dashed #bbb;
+    padding-right: 12px;
+}
+
+.fee-receipt-pane--student {
+    padding-left: 12px;
+}
+
+.invoice {
+    margin-bottom: 8px;
+}
+
+.invoice .table {
+    font-size: 8pt !important;
+    margin-bottom: 6px;
+}
+
+.invoice .table > thead > tr > th,
+.invoice .table > tbody > tr > td {
+    padding: 3px 4px;
+    vertical-align: middle;
+}
+
+.receipt-header-img {
+    height: 75px !important;
+    width: 100% !important;
+    object-fit: contain;
+}
+
+.fee-copy-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin: 3px 0 6px;
+    padding: 3px 12px;
+    background: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.fee-receipt-dual-row address {
+    font-size: 8pt;
+    margin-bottom: 4px;
+    line-height: 1.3;
+}

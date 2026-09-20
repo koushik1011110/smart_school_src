@@ -1,0 +1,65 @@
+# ----------------------------------------------------------------------------------
+# Smart School / CodeIgniter 3 - Production Ready .htaccess
+# ----------------------------------------------------------------------------------
+
+# 1. Ensure index.php is loaded by default
+DirectoryIndex index.php index.html
+
+# 2. Prevent directory browsing (Security)
+<IfModule mod_autoindex.c>
+    Options -Indexes
+</IfModule>
+
+# 3. Disable MultiViews to avoid conflicts with Controller names
+<IfModule mod_negotiation.c>
+    Options -MultiViews
+</IfModule>
+
+# 4. URL Rewriting / Routing
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Note: If your site is in the root directory (public_html) on your server 
+    # and pages show 404, uncomment the next line:
+    # RewriteBase /
+    # If in a subfolder (e.g. domain.com/school/), set: RewriteBase /school/
+
+    # Deny direct access to system and application directories
+    RewriteCond %{REQUEST_URI} ^system.*
+    RewriteRule ^(.*)$ index.php?/$1 [L]
+
+    RewriteCond %{REQUEST_URI} ^application.*
+    RewriteRule ^(.*)$ index.php?/$1 [L]
+
+    # If the requested file or folder exists, serve it directly (CSS, JS, Images, Uploads)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Rewrite all other requests to index.php with Query String Append (QSA)
+    RewriteRule ^(.*)$ index.php?/$1 [L,QSA]
+</IfModule>
+
+# 5. Fallback if mod_rewrite is not active
+<IfModule !mod_rewrite.c>
+    ErrorDocument 404 /index.php
+</IfModule>
+
+# 6. Security: Prevent downloading database files, logs, and sensitive data
+<FilesMatch "\.(sql|log|ini|sh|bak|md|git|env|yml|yaml)$">
+    <IfModule authz_core_module>
+        Require all denied
+    </IfModule>
+    <IfModule !authz_core_module>
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# 7. Protect composer and sensitive json files
+<Files "composer.json">
+    <IfModule authz_core_module>
+        Require all denied
+    </IfModule>
+    <IfModule !authz_core_module>
+        Deny from all
+    </IfModule>
+</Files>

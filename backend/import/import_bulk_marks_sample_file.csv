@@ -1,0 +1,4 @@
+adm_no,subject_code,status,marks,note
+1001,MATH101,1,75,Good
+1001,SCI101,1,80,Good
+1002,MATH101,0,0,Absent
